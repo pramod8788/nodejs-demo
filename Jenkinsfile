@@ -17,12 +17,19 @@ pipeline {
         }
         stage('login to dockerhub') {
             steps{
-                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+                script {
+                    withCredentials([string(credentialsId: 'dockerhub', variable: 'dockerhubpwd')]) { 
+                    sh 'docker login -u pramod8788 -p ${dockerhubpwd}'
+                    }
+               
+                }
             }
         }
         stage('push image') {
             steps{
-                sh 'docker push pramod8788/nodeapp:$BUILD_NUMBER'
+                script {
+                  sh 'docker build -t pramod8788/my-nodeapp .'
+                }
             }
         }
 }
