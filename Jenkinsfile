@@ -12,7 +12,7 @@ pipeline {
 
         stage('Build docker image') {
             steps {  
-                sh 'docker build -t pramod8788/nodeapp:$BUILD_NUMBER .'
+                sh 'docker build -t pramod8788/nodeapp .'
             }
         }
         stage('login to dockerhub') {
@@ -28,7 +28,7 @@ pipeline {
         stage('push image') {
             steps{
                 script {
-                  sh 'docker build -t pramod8788/my-nodeapp .'
+                  sh 'docker push pramod8788/nodeapp'
                 }
             }
         }
